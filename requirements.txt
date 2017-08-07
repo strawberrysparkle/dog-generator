@@ -13,5 +13,5 @@ requests-oauthlib==0.8.0
 s3transfer==0.1.10
 six==1.10.0
 tracery==0.1.1
-tweepy==3.4.0twitter==1.17.1
+tweepy==3.5.0twitter==1.17.1
 urllib3==1.22
