@@ -7,6 +7,7 @@ import tweepy
 import os
 import boto3
 from tracery.modifiers import base_english
+import time
 
 #Create a dog
 rules = {
@@ -39,7 +40,7 @@ class TwitterAPI:
         """Send a tweet"""
         self.api.update_status(status=message)
 
-if __name__ == "__main__":
+while __name__ == "__main__":
     twitter = TwitterAPI()
     twitter.tweet(grammar.flatten("#origin#"))
     time.sleep(10800)
