@@ -19,24 +19,29 @@ grammar = tracery.Grammar(rules)
 grammar.add_modifiers(base_english)
 
 #Twitter credentials
-def get_api(cfg):
-  auth = tweepy.OAuthHandler(cfg['consumer_key'], cfg['consumer_secret'])
-  auth.set_access_token(cfg['access_token'], cfg['access_token_secret'])
-  return tweepy.API(auth)
+class TwitterAPI:
+    """
+    Class for accessing the Twitter API.
+    Requires API credentials to be available in environment
+    variables. These will be set appropriately if the bot was created
+    with init.sh included with the heroku-twitterbot-starter
+    """
+    def __init__(self):
+        consumer_key = os.environ.get('consumer_key')
+        consumer_secret = os.environ.get('consumer_secret')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        access_token = os.environ.get('access_token')
+        access_token_secret = os.environ.get('access_token_secret')
+        auth.set_access_token(access_token, access_token_secret)
+        self.api = tweepy.API(auth)
 
-def main():
-  # Fill in the values noted in previous step here
-  cfg = { 
-    "consumer_key"        : "consumer_key",
-    "consumer_secret"     : "consumer_secret",
-    "access_token"        : "access_token",
-    "access_token_secret" : "access_token_secret" 
-    }
-
-  api = get_api(cfg)
-  tweet = "Test post!"
-  status = api.update_status(grammar.flatten("#origin#")) 
-  # Yes, tweet is called 'status' rather confusing
+    def tweet(self, message):
+        """Send a tweet"""
+        self.api.update_status(status=message)
 
 if __name__ == "__main__":
-  main()
+    twitter = TwitterAPI()
+    twitter.tweet(grammar.flatten("#origin#"))
+    while True:
+        #Send a tweet here!
+        time.sleep(60)
