@@ -42,3 +42,4 @@ class TwitterAPI:
 if __name__ == "__main__":
     twitter = TwitterAPI()
     twitter.tweet(grammar.flatten("#origin#"))
+    time.sleep(10800)
